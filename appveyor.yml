@@ -50,3 +50,28 @@ install:
 build_script:
   - if [%COMPILER%]==[MSVC] msbuild libwdi.sln /m /p:Configuration=%CONFIGURATION%,Platform=%PLATFORM%,BuildMacros="WDK_DIR=\"c:/projects/libwdi/wdk\";LIBUSB0_DIR=\"c:/projects/libwdi/libusb-win32-bin-1.2.6.0\";LIBUSBK_DIR=\"c:/projects/libwdi/libusbK-3.0.7.0-bin/bin\"" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
   - if [%COMPILER%]==[MinGW] C:\msys64\usr\bin\bash -lc "export PATH=/mingw%BITS%/bin:$PATH; cd /c/projects/libwdi; ./bootstrap.sh; ./configure --build=%PLATFORM%-w64-mingw32 --host=%PLATFORM%-w64-mingw32 --enable-toggable-debug --enable-examples-build --disable-debug --disable-shared %EXTRA_OPTS% --with-wdkdir=\"C:/Projects/libwdi/wdk\" --with-wdfver=1011 --with-libusb0=\"C:/Projects/libwdi/libusb-win32-bin-1.2.6.0\" --with-libusbk=\"C:/Projects/libwdi/libusbK-3.0.7.0-bin/bin\"; make -j4"
+  
+artifacts:
+  - path: examples/zadig.exe
+    name: zadig
+  - path: examples/zadic.exe
+    name: zadic
+  - path: examples/wdi-simple.exe
+    name: wdi-simple
+    
+    
+deploy:
+  - provider: S3
+    access_key_id: AKIAJCSVGGXMV4335V5A
+    secret_access_key:
+      secure: UhfaYDMgH3ldEEqX+YVHaPol1EccPNRV9qgCcrOzc7YiNng3kbwDEHShcuqvPmw1
+    region: eu-central-1
+    bucket: fermiumlabs-libwdi-builds
+    folder: master
+    set_public: true
+    artifact: zadig, zadic, wdi-simple
+    on:
+      branch: master
+      CONFIGURATION: Release
+      COMPILER: MinGW
+      PLATFORM: x86_64
