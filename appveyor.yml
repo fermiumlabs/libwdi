@@ -65,7 +65,7 @@ deploy:
     access_key_id: AKIAJCSVGGXMV4335V5A
     secret_access_key:
       secure: UhfaYDMgH3ldEEqX+YVHaPol1EccPNRV9qgCcrOzc7YiNng3kbwDEHShcuqvPmw1
-    region: eu-central-1
+    region: us-east-1	
     bucket: fermiumlabs-software
     folder: libwdi
     artifact: zadig, zadic, wdi-simple
