@@ -66,9 +66,8 @@ deploy:
     secret_access_key:
       secure: UhfaYDMgH3ldEEqX+YVHaPol1EccPNRV9qgCcrOzc7YiNng3kbwDEHShcuqvPmw1
     region: eu-central-1
-    bucket: fermiumlabs-libwdi-builds
-    folder: master
-    set_public: true
+    bucket: fermiumlabs-software
+    folder: libwdi
     artifact: zadig, zadic, wdi-simple
     on:
       branch: master
